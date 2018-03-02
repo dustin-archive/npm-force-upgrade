@@ -1,0 +1,13 @@
+{
+  "name": "npm-force-upgrade",
+  "version": "0.0.0",
+  "description": "Force upgrade each package in package.json to the latest version",
+  "repository": "whaaaley/npm-force-upgrade",
+  "author": "whaaaley",
+  "license": "MIT",
+  "bin": "bin/npm-force-upgrade.js",
+  "keywords": [ "npm" ],
+  "dependencies": {
+    "minimist": "^1.2.0"
+  }
+}
