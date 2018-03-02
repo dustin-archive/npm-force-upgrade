@@ -1,7 +1,0 @@
-usage:
-  $ npm-force-upgrade [options]
-
-options:
-  -h, --help     show this help message
-  -v, --version  show package version
-  -p, --package  package.json file to upgrade

@@ -1,23 +1,13 @@
 # npm-force-upgrade
 > Force upgrade each package in package.json to the latest version
 
-```sh
-$ npm-force-upgrade
-```
-
-This package provides a script that serves as a temporary fix for `npm update` not writing package versions to `package.json`. Install it using npm:
+This package provides a simple script that upgrades all `dependencies` and `devDependencies` in `package.json` to their latest versions. Install it using npm:
 
 ```sh
 $ npm i -g npm-force-upgrade
 ```
 
 ## Usage
-```
-usage:
-  $ npm-force-upgrade [options]
-
-options:
-  -h, --help     show this help message
-  -v, --version  show package version
-  -p, --package  package.json file to upgrade
+```sh
+$ npm-force-upgrade
 ```

@@ -1,44 +1,24 @@
 #!/usr/bin/env node
-var path = require('path')
-var join = path.join
-var resolve = path.resolve
-var read = require('fs').readFileSync
-var exec = require('child_process').execSync
-var args = process.argv.slice(2)
-var argv = require('minimist')(args, {
-  alias: {
-    h: 'help',
-    v: 'version',
-    p: 'package'
-  },
-  default: {
-    package: 'package.json'
+var readFileSync = require('fs').readFileSync
+var execSync = require('child_process').execSync
+var resolve = require('path').resolve
+var pkg = JSON.parse(readFileSync(resolve('package.json')))
+var deps = expand(pkg.dependencies)
+var devDeps = expand(pkg.devDependencies)
+
+if (deps) {
+  execSync('npm i ' + deps, { maxBuffer: Infinity, stdio: 'inherit' })
+}
+
+if (devDeps) {
+  execSync('npm i -D ' + devDeps, { maxBuffer: Infinity, stdio: 'inherit' })
+}
+
+function expand(deps) {
+  var result = ''
+  for (var name in deps) {
+    if (result) result += ' '
+    result += name + '@latest'
   }
-})
-
-if (argv.help) {
-  var path = join(__dirname, 'help.txt')
-  var help = read(path, 'utf8')
-  console.log(help)
-  process.exit()
-}
-
-if (argv.version) {
-  var path = join(__dirname, '../package.json')
-  var pkg = JSON.parse(read(path))
-  console.log('v' + pkg.version)
-  process.exit()
-}
-
-var path = resolve(argv.package)
-var pkg = JSON.parse(read(path))
-var deps = pkg.dependencies ? Object.keys(pkg.dependencies) : []
-var devDeps = pkg.devDependencies ? Object.keys(pkg.devDependencies) : []
-
-if (deps.length) {
-  exec('npm i ' + deps.join(' '), { maxBuffer: Infinity, stdio: 'inherit' })
-}
-
-if (devDeps.length) {
-  exec('npm i -D ' + devDeps.join(' '), { maxBuffer: Infinity, stdio: 'inherit' })
+  return result
 }
